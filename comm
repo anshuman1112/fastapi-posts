@@ -1,0 +1,8 @@
+docker run -it -d --name post-app-run -p 8000:8000 post-app:latest
+
+docker build -t post-app .
+
+
+alembic init alembic
+
+alembic revision -m "create posts table"
