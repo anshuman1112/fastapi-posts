@@ -1,8 +1,45 @@
 docker run -it -d --name post-app-run -p 8000:8000 post-app:latest
 
-docker build -t post-app .
+docker build -t fast-app .
 
 
 alembic init alembic
 
 alembic revision -m "create posts table"
+
+alembic upgrade head
+
+Imp DB Commands:
+
+Enter the DB container with the user postgres
+
+    docker exec -it <container_name_or_id> psql -U postgres
+
+    kubectl exec -it <pod name or id> -- psql -U postgres
+
+Get the current db connected to:
+    
+    SELECT current_database();
+
+List of databases
+
+    \l
+
+Connect the DB : 
+    
+    \c <databaseName>
+
+
+List of tables: 
+    \dt *.*
+
+
+
+kubectl get secret --namespace default postgresql-test -o jsonpath="{.data.postgresql-password}" | base64 --decode
+
+Create temp docker conatainers to test connection to db pods
+
+        kubectl run -it --rm dns-test --image=busybox --restart=Never -- nslookup postgres-service
+
+        kubectl run postgres-client --rm --tty -i --restart='Never' --image postgres:11 --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql -h postgres -U postgres
+

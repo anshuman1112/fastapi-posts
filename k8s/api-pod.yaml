@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fast-api
+  labels:
+    app: fast-api
+spec:
+  containers:
+    - image: fast-app:v4
+      name: fast-api
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: DATABASE_HOSTNAME
+          value: postgres
+      ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+
+      
